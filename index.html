@@ -87,6 +87,14 @@ details.deep summary:hover{color:var(--text)}
 .check{display:flex;gap:8px;align-items:flex-start;cursor:pointer}.check input{margin-top:5px;accent-color:var(--accent)}
 .checkitem{list-style:none;margin-left:-20px}
 .xref{text-decoration:none;border-bottom:1px dotted var(--accent-line)}
+.xp-card{position:absolute;z-index:60;width:min(340px,calc(100vw - 16px));background:var(--tip);border:1px solid var(--accent-line);border-radius:8px;padding:12px 14px;box-shadow:0 8px 24px rgba(0,0,0,.35);font-size:13px;line-height:1.5}
+.xp-card b{display:block;font-family:var(--mono);font-size:12.5px;font-weight:600;color:var(--accent);margin-bottom:6px}
+.xp-card p{color:var(--text);margin:0 0 10px}
+.xp-go{display:inline-block;font-family:var(--mono);font-size:12px;text-decoration:none;color:var(--accent);border:1px solid var(--accent-line);border-radius:6px;padding:4px 10px}
+.xp-go:hover{background:var(--accent-dim)}
+.back-pill{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:55;max-width:calc(100vw - 32px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:var(--mono);font-size:12px;color:var(--accent);background:var(--panel);border:1px solid var(--accent-line);border-radius:999px;padding:9px 18px;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,.35)}
+.back-pill:hover{background:var(--accent-dim)}
+@media print{.xp-card,.back-pill{display:none!important}}
 .btn{display:inline-block;font-family:var(--mono);font-size:12px;color:var(--text2);background:transparent;border:1px solid var(--border);padding:7px 14px;border-radius:6px;text-decoration:none;cursor:pointer}
 .btn:hover{color:var(--text);border-color:var(--text2)}
 .btn-accent{color:var(--accent);border-color:var(--accent-line)}.btn-accent:hover{color:var(--bg);background:var(--accent);border-color:var(--accent)}
@@ -474,6 +482,78 @@ details.deep summary:hover{color:var(--text)}
   });
   window.addEventListener('hashchange',route);
   paintRead();route();
+})();
+</script>
+<script>
+// Cross-link preview (hover, or first tap on a phone) and a "Back to where you were" pill after a jump.
+(function(){
+  var card=document.createElement('div');card.className='xp-card';card.hidden=true;document.body.appendChild(card);
+  var pill=document.createElement('button');pill.type='button';pill.className='back-pill';pill.hidden=true;document.body.appendChild(pill);
+  var stack=[],pending=null,returning=null,hideT=null,openFor=null,lastTouch=false;
+  function targetOf(a){var h=a.getAttribute('href')||'',i=h.indexOf('#');return i<0?null:document.getElementById(h.slice(i+1))}
+  function preview(el){
+    var isMod=el.classList.contains('module');
+    var title=(isMod?el.querySelector('h1'):el.querySelector('h2')).textContent;
+    var p=isMod?el.querySelector('.mod-intro p, .sec p'):el.querySelector('p');
+    var body='';
+    if(p){var c=p.cloneNode(true);c.querySelectorAll('.tag').forEach(function(t){t.remove()});body=c.textContent.trim()}
+    if(body.length>240)body=body.slice(0,body.lastIndexOf(' ',237))+'…';
+    return {title:title,body:body};
+  }
+  function show(a){
+    var el=targetOf(a);if(!el)return;
+    var pv=preview(el);
+    card.textContent='';
+    var b=document.createElement('b');b.textContent=pv.title;card.appendChild(b);
+    if(pv.body){var p=document.createElement('p');p.textContent=pv.body;card.appendChild(p)}
+    var go=document.createElement('a');go.className='xp-go';go.href=a.getAttribute('href');go.textContent='Go to '+a.textContent+' →';
+    go.addEventListener('click',function(){markJump(a);hide()});
+    card.appendChild(go);
+    card.hidden=false;
+    var r=a.getBoundingClientRect(),w=card.offsetWidth,vw=document.documentElement.clientWidth;
+    card.style.left=Math.min(Math.max(8,r.left),vw-w-8)+window.scrollX+'px';
+    card.style.top=r.bottom+window.scrollY+6+'px';
+    openFor=a;
+  }
+  function hide(){card.hidden=true;openFor=null}
+  function markJump(a){
+    var sec=a.closest('section.sec')||a.closest('.module');if(!sec)return;
+    if(a.getAttribute('href')===location.hash){pending=null;return}
+    var h=sec.classList.contains('module')?sec.querySelector('h1'):sec.querySelector('h2');
+    pending={id:sec.id,y:window.scrollY,label:h.textContent};
+  }
+  function paintPill(){
+    if(stack.length){pill.textContent='↩ Back to '+stack[stack.length-1].label;pill.hidden=false}else pill.hidden=true;
+  }
+  document.addEventListener('pointerdown',function(e){lastTouch=e.pointerType==='touch'||e.pointerType==='pen'},true);
+  document.addEventListener('mouseover',function(e){
+    if(lastTouch)return;
+    var a=e.target.closest('a.xref');
+    if(a){clearTimeout(hideT);if(openFor!==a)show(a)}
+    else if(e.target.closest('.xp-card'))clearTimeout(hideT);
+    else if(openFor){clearTimeout(hideT);hideT=setTimeout(hide,250)}
+  });
+  document.addEventListener('focusin',function(e){var a=e.target.closest&&e.target.closest('a.xref');if(a)show(a)});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')hide()});
+  document.addEventListener('click',function(e){
+    var a=e.target.closest('a.xref');
+    if(a){
+      if(lastTouch&&openFor!==a){e.preventDefault();show(a);return}
+      markJump(a);hide();return;
+    }
+    if(!e.target.closest('.xp-card'))hide();
+  },true);
+  pill.addEventListener('click',function(){
+    var t=stack.pop();if(!t)return;
+    if(location.hash==='#'+t.id){window.scrollTo(0,t.y);paintPill()}
+    else{returning=t;location.hash='#'+t.id}
+  });
+  window.addEventListener('hashchange',function(){
+    hide();
+    if(returning){var r=returning;returning=null;setTimeout(function(){window.scrollTo(0,r.y)},0);paintPill();return}
+    if(pending){stack.push(pending);pending=null}else stack=[];
+    paintPill();
+  });
 })();
 </script>
 </body>
