@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<script>try{if(localStorage.getItem('hive-theme')==='light')document.documentElement.setAttribute('data-theme','light')}catch(e){}</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Strategies — The Hive</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -11,6 +12,7 @@
   --text:#e2e8f0;--text2:#8892a4;--muted:#4a5568;
   --accent:#2dd4bf;--accent-dim:rgba(45,212,191,0.10);--accent-line:rgba(45,212,191,0.35);
   --warn:#f59e0b;--warn-dim:rgba(245,158,11,0.08);
+  --strong:#f1f5f9;--tip:#151827;
   --mono:'IBM Plex Mono',ui-monospace,monospace;--sans:'IBM Plex Sans',system-ui,sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -25,6 +27,18 @@ code{font-family:var(--mono);font-size:.88em;background:var(--input);padding:1px
 .logo em{color:var(--muted);font-style:normal;font-weight:400}.logo b{color:var(--accent);font-weight:700}
 .hub-link{font-family:var(--mono);font-size:12px;color:var(--text2);text-decoration:none;border:1px solid var(--border);padding:5px 12px;border-radius:6px}
 .hub-link:hover{color:var(--accent);border-color:var(--accent)}
+.theme-btn{background:transparent;cursor:pointer}.theme-btn .to-dark{display:none}
+:root[data-theme="light"] .theme-btn .to-light{display:none}:root[data-theme="light"] .theme-btn .to-dark{display:inline}
+:root[data-theme="light"]{
+  --bg:#f6f7f9;--panel:#ffffff;--input:#eef0f4;--border:#d9dde5;
+  --text:#111827;--text2:#4b5563;--muted:#8a94a6;--strong:#0b1220;--tip:#ffffff;
+  --accent:#0f766e;--accent-dim:rgba(15,118,110,0.08);--accent-line:rgba(15,118,110,0.35);
+  --warn:#b45309;--warn-dim:rgba(180,83,9,0.07);
+}
+:root[data-theme="light"] .dgm .d-anno-warn,:root[data-theme="light"] .dgm .d-zh-t,:root[data-theme="light"] .dgm .d-lvl-w-t{fill:#b45309}
+:root[data-theme="light"] .dgm .d-mark-buy{fill:#15803d}
+:root[data-theme="light"] .dgm .d-zi-t,:root[data-theme="light"] .dgm .d-lvl-d-t{fill:#0284c7}
+:root[data-theme="light"] .term:hover::after,:root[data-theme="light"] .term:focus::after{box-shadow:0 6px 20px rgba(15,23,42,.15)}
 #mods{max-width:1180px;margin:0 auto;padding:0 8px;display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
 #mods::-webkit-scrollbar{display:none}
 .mod-tab{flex:none;display:flex;align-items:center;gap:6px;padding:10px 12px;font-family:var(--mono);font-size:12px;color:var(--text2);text-decoration:none;border-bottom:2px solid transparent;white-space:nowrap}
@@ -48,7 +62,7 @@ main{max-width:1180px;margin:0 auto;padding:28px 16px 64px}
 .sec h3{font-family:var(--mono);font-size:14px;font-weight:600;color:var(--text2);margin:18px 0 8px;text-transform:none}
 .sec p,.sec ul,.sec ol,.sec blockquote,.table-wrap{margin-bottom:12px}
 .sec ul,.sec ol{padding-left:22px}.sec li{margin:3px 0}.sec li ul,.sec li ol{margin:4px 0 0}
-strong{color:#f1f5f9;font-weight:600}
+strong{color:var(--strong);font-weight:600}
 .tag{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--bg);background:var(--text2);padding:2px 6px;border-radius:3px;margin-right:6px;vertical-align:1px}
 .iof{border-left:3px solid var(--accent);background:var(--accent-dim);padding:10px 14px;margin-bottom:12px}
 .iof p{margin:0}
@@ -139,7 +153,7 @@ details.deep summary:hover{color:var(--text)}
 .dgm-wrap .dgm{min-width:600px;margin:0}
 .term{border-bottom:1px dotted var(--text2);cursor:help;position:relative;outline:none}
 .term:hover,.term:focus{color:var(--accent);border-bottom-color:var(--accent)}
-.term:hover::after,.term:focus::after{content:attr(data-def);position:absolute;left:0;top:calc(100% + 6px);z-index:40;width:max-content;max-width:min(300px,78vw);background:#151827;border:1px solid var(--accent-line);color:var(--text);font-family:var(--sans);font-size:13px;font-weight:400;font-style:normal;line-height:1.45;padding:8px 10px;border-radius:6px;white-space:normal;text-transform:none;letter-spacing:0;box-shadow:0 6px 20px rgba(0,0,0,.45)}
+.term:hover::after,.term:focus::after{content:attr(data-def);position:absolute;left:0;top:calc(100% + 6px);z-index:40;width:max-content;max-width:min(300px,78vw);background:var(--tip,#151827);border:1px solid var(--accent-line);color:var(--text);font-family:var(--sans);font-size:13px;font-weight:400;font-style:normal;line-height:1.45;padding:8px 10px;border-radius:6px;white-space:normal;text-transform:none;letter-spacing:0;box-shadow:0 6px 20px rgba(0,0,0,.45)}
 @media print{.term{border-bottom:none}.term::after{display:none!important}}
 .dgm .d-flow{stroke:var(--muted);stroke-width:1.6}
 .dgm .d-flow-path{fill:none;stroke:var(--muted);stroke-width:1.6}
@@ -169,6 +183,8 @@ details.deep summary:hover{color:var(--text)}
 </style>
 <style>
 :root{--accent:#60a5fa;--accent-dim:rgba(96,165,250,.10);--accent-line:rgba(96,165,250,.45)}
+:root[data-theme="light"]{--accent:#2563eb;--accent-dim:rgba(37,99,235,.08);--accent-line:rgba(37,99,235,.35)}
+:root[data-theme="light"] .st-rev{color:#b45309}:root[data-theme="light"] .st-ok{color:#15803d}
 .sg{max-width:860px;margin:0 auto;padding:24px 16px 64px}
 .sg h1{font-family:var(--mono);font-size:22px;margin-bottom:8px}
 .sg-intro p{color:var(--text2);margin-bottom:10px}
@@ -193,7 +209,7 @@ details.deep summary:hover{color:var(--text)}
 <body>
 <header class="ck-top" id="top">
   <div class="bar"><div class="logo">THE<em>/</em>HIVE <b>STRATEGIES</b></div>
-  <div style="display:flex;gap:8px"><a class="hub-link" href="index.html">Learn</a><a class="hub-link" href="https://cbell0920.github.io/tptraders-hub">← Hub</a></div></div>
+  <div style="display:flex;gap:8px"><button class="hub-link theme-btn" type="button" onclick="(function(b){var r=document.documentElement,l=r.getAttribute('data-theme')!=='light';if(l)r.setAttribute('data-theme','light');else r.removeAttribute('data-theme');try{localStorage.setItem('hive-theme',l?'light':'dark')}catch(e){}})(this)"><span class="to-light">☀ Light</span><span class="to-dark">☾ Dark</span></button><a class="hub-link" href="index.html">Learn</a><a class="hub-link" href="https://cbell0920.github.io/tptraders-hub">← Hub</a></div></div>
   <nav id="mods" aria-label="Strategies"><a class="mod-tab" data-mod="overview" href="#overview"><span class="t">Overview</span></a><a class="mod-tab" data-mod="which-side-to-trade-range-and-trend" href="#which-side-to-trade-range-and-trend"><span class="dot st-rev" aria-hidden="true"></span><span class="t">Which side</span></a><a class="mod-tab" data-mod="supply-and-demand-zones" href="#supply-and-demand-zones"><span class="dot st-rev" aria-hidden="true"></span><span class="t">Supply &amp; demand</span></a><a class="mod-tab" data-mod="top-down-alignment" href="#top-down-alignment"><span class="dot st-rev" aria-hidden="true"></span><span class="t">Top-down</span></a><a class="mod-tab" data-mod="trend-pullback" href="#trend-pullback"><span class="dot st-rev" aria-hidden="true"></span><span class="t">Pullback</span></a><a class="mod-tab" data-mod="breakout-retest" href="#breakout-retest"><span class="dot st-rev" aria-hidden="true"></span><span class="t">Breakout retest</span></a><a class="mod-tab" data-mod="range-edges" href="#range-edges"><span class="dot st-rev" aria-hidden="true"></span><span class="t">Range edges</span></a><a class="mod-tab" data-mod="double-bottom-reversal" href="#double-bottom-reversal"><span class="dot st-rev" aria-hidden="true"></span><span class="t">Double bottom</span></a></nav>
 </header>
 <main class="sg">
