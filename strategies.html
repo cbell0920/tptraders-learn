@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230d0f1a'/%3E%3Cpolygon points='9.78,5.60 15.50,8.90 15.50,15.50 9.78,18.80 4.07,15.50 4.07,8.90' fill='%23f5b942'/%3E%3Cpolygon points='22.22,5.60 27.93,8.90 27.93,15.50 22.22,18.80 16.50,15.50 16.50,8.90' fill='%23f5b942'/%3E%3Cpolygon points='16.00,16.40 21.72,19.70 21.72,26.30 16.00,29.60 10.28,26.30 10.28,19.70' fill='%23f5b942'/%3E%3C/svg%3E">
 <script>try{if(localStorage.getItem('hive-theme')==='light')document.documentElement.setAttribute('data-theme','light')}catch(e){}</script>
+<script src="hive-menu.js" defer></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Strategies — The Hive</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -218,7 +219,7 @@ details.deep summary:hover{color:var(--text)}
 <body>
 <header class="ck-top" id="top">
   <div class="bar"><div class="logo">THE<em>/</em>HIVE <b>STRATEGIES</b></div>
-  <div style="display:flex;gap:8px"><button class="hub-link theme-btn" type="button" onclick="(function(b){var r=document.documentElement,l=r.getAttribute('data-theme')!=='light';if(l)r.setAttribute('data-theme','light');else r.removeAttribute('data-theme');try{localStorage.setItem('hive-theme',l?'light':'dark')}catch(e){}})(this)"><span class="to-light">☀ Light</span><span class="to-dark">☾ Dark</span></button><a class="hub-link" href="index.html">Learn</a><a class="hub-link" href="https://cbell0920.github.io/tptraders-hub">← Hive</a></div></div>
+  <div style="display:flex;gap:8px"><a class="hub-link" href="index.html">Learn</a><a class="hub-link" href="https://cbell0920.github.io/tptraders-hub">← Hive</a><div id="hive-menu"></div></div></div>
   <nav id="mods" aria-label="Strategies"><a class="mod-tab" data-mod="overview" href="#overview"><span class="t">Overview</span></a><a class="mod-tab" data-mod="which-side-to-trade-range-and-trend" href="#which-side-to-trade-range-and-trend"><span class="dot st-rev" aria-hidden="true"></span><span class="t">Which side</span></a><a class="mod-tab" data-mod="supply-and-demand-zones" href="#supply-and-demand-zones"><span class="dot st-rev" aria-hidden="true"></span><span class="t">Supply &amp; demand</span></a><a class="mod-tab" data-mod="top-down-alignment" href="#top-down-alignment"><span class="dot st-rev" aria-hidden="true"></span><span class="t">Top-down</span></a><a class="mod-tab" data-mod="trend-pullback" href="#trend-pullback"><span class="dot st-rev" aria-hidden="true"></span><span class="t">Pullback</span></a><a class="mod-tab" data-mod="breakout-retest" href="#breakout-retest"><span class="dot st-rev" aria-hidden="true"></span><span class="t">Breakout retest</span></a><a class="mod-tab" data-mod="range-edges" href="#range-edges"><span class="dot st-rev" aria-hidden="true"></span><span class="t">Range edges</span></a><a class="mod-tab" data-mod="double-bottom-reversal" href="#double-bottom-reversal"><span class="dot st-rev" aria-hidden="true"></span><span class="t">Double bottom</span></a></nav>
 </header>
 <main class="sg">

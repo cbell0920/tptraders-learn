@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230d0f1a'/%3E%3Cpolygon points='9.78,5.60 15.50,8.90 15.50,15.50 9.78,18.80 4.07,15.50 4.07,8.90' fill='%23f5b942'/%3E%3Cpolygon points='22.22,5.60 27.93,8.90 27.93,15.50 22.22,18.80 16.50,15.50 16.50,8.90' fill='%23f5b942'/%3E%3Cpolygon points='16.00,16.40 21.72,19.70 21.72,26.30 16.00,29.60 10.28,26.30 10.28,19.70' fill='%23f5b942'/%3E%3C/svg%3E">
+<script>try{if(localStorage.getItem('hive-theme')==='light')document.documentElement.setAttribute('data-theme','light')}catch(e){}</script>
+<script src="hive-menu.js" defer></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What's new — The Hive</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07080f;--panel:#0d0f1a;--input:#111320;--border:#1a1d2e;
+  --text:#e2e8f0;--text2:#8892a4;--muted:#4a5568;
+  --accent:#2dd4bf;--accent-dim:rgba(45,212,191,0.10);--accent-line:rgba(45,212,191,0.35);
+  --warn:#f59e0b;--warn-dim:rgba(245,158,11,0.08);
+  --strong:#f1f5f9;--tip:#151827;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;--sans:'IBM Plex Sans',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-padding-top:112px}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:15px;line-height:1.65}
+a{color:var(--accent)}
+code{font-family:var(--mono);font-size:.88em;background:var(--input);padding:1px 5px;border-radius:3px}
+/* top bar + module bar */
+#top{position:sticky;top:0;z-index:20;background:var(--panel);border-bottom:1px solid var(--border)}
+.bar{max-width:1180px;margin:0 auto;padding:0 16px;display:flex;align-items:center;justify-content:space-between;height:48px}
+.logo{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.2em}
+.logo em{color:var(--muted);font-style:normal;font-weight:400}.logo b{color:var(--accent);font-weight:700}
+.hub-link{font-family:var(--mono);font-size:12px;color:var(--text2);text-decoration:none;border:1px solid var(--border);padding:5px 12px;border-radius:6px}
+.hub-link:hover{color:var(--accent);border-color:var(--accent)}
+.theme-btn{background:transparent;cursor:pointer}.theme-btn .to-dark{display:none}
+:root[data-theme="light"] .theme-btn .to-light{display:none}:root[data-theme="light"] .theme-btn .to-dark{display:inline}
+:root[data-theme="light"]{
+  --bg:#f6f7f9;--panel:#ffffff;--input:#eef0f4;--border:#d9dde5;
+  --text:#111827;--text2:#4b5563;--muted:#8a94a6;--strong:#0b1220;--tip:#ffffff;
+  --accent:#0f766e;--accent-dim:rgba(15,118,110,0.08);--accent-line:rgba(15,118,110,0.35);
+  --warn:#b45309;--warn-dim:rgba(180,83,9,0.07);
+}
+:root[data-theme="light"] .dgm .d-anno-warn,:root[data-theme="light"] .dgm .d-zh-t,:root[data-theme="light"] .dgm .d-lvl-w-t{fill:#b45309}
+:root[data-theme="light"] .dgm .d-mark-buy{fill:#15803d}
+:root[data-theme="light"] .dgm .d-zi-t,:root[data-theme="light"] .dgm .d-lvl-d-t{fill:#0284c7}
+:root[data-theme="light"] .term:hover::after,:root[data-theme="light"] .term:focus::after{box-shadow:0 6px 20px rgba(15,23,42,.15)}
+#mods{max-width:1180px;margin:0 auto;padding:0 8px;display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
+#mods::-webkit-scrollbar{display:none}
+.mod-tab{flex:none;display:flex;align-items:center;gap:6px;padding:10px 12px;font-family:var(--mono);font-size:12px;color:var(--text2);text-decoration:none;border-bottom:2px solid transparent;white-space:nowrap}
+.mod-tab .n{color:var(--muted)}.mod-tab .done{display:none;color:var(--accent)}
+.mod-tab.read .done{display:inline}
+.mod-tab:hover{color:var(--text)}
+.mod-tab.active{color:var(--accent);border-bottom-color:var(--accent)}.mod-tab.active .n{color:var(--accent)}
+/* module */
+main{max-width:1180px;margin:0 auto;padding:28px 16px 64px}
+.mod-head{margin-bottom:24px;max-width:760px}
+.mod-head h1{font-family:var(--mono);font-size:22px;font-weight:700;letter-spacing:.01em;margin-bottom:8px}
+.mod-intro p{color:var(--text2)}
+.mod-grid{display:grid;grid-template-columns:220px minmax(0,1fr);gap:32px;align-items:start}
+.toc{position:sticky;top:112px;display:flex;flex-direction:column;gap:2px;max-height:calc(100vh - 130px);overflow:auto}
+.toc-link{font-size:13px;color:var(--text2);text-decoration:none;padding:5px 10px;border-left:2px solid var(--border);line-height:1.35}
+.toc-link:hover{color:var(--text)}.toc-link.on{color:var(--accent);border-left-color:var(--accent)}
+.toc-quick{margin-top:6px;font-family:var(--mono);font-size:12px}
+.mod-body{max-width:780px;min-width:0}
+.sec{padding:22px 0 26px;border-bottom:1px solid var(--border)}
+.sec h2{font-family:var(--mono);font-size:17px;font-weight:600;margin-bottom:12px;color:var(--text)}
+.sec h3{font-family:var(--mono);font-size:14px;font-weight:600;color:var(--text2);margin:18px 0 8px;text-transform:none}
+.sec p,.sec ul,.sec ol,.sec blockquote,.table-wrap{margin-bottom:12px}
+.sec ul,.sec ol{padding-left:22px}.sec li{margin:3px 0}.sec li ul,.sec li ol{margin:4px 0 0}
+strong{color:var(--strong);font-weight:600}
+.tag{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--bg);background:var(--text2);padding:2px 6px;border-radius:3px;margin-right:6px;vertical-align:1px}
+.iof{border-left:3px solid var(--accent);background:var(--accent-dim);padding:10px 14px;margin-bottom:12px}
+.iof p{margin:0}
+.example{border-left:3px solid var(--border);padding-left:14px}
+.mistake{border-left:3px solid var(--warn);background:var(--warn-dim);padding:10px 14px;margin-bottom:12px}.mistake p{margin:0}
+.tbd{font-family:var(--mono);font-size:11px;color:var(--warn);border:1px solid rgba(245,158,11,.35);padding:1px 6px;border-radius:3px}
+blockquote{border-left:3px solid var(--accent-line);padding:4px 14px;color:var(--text);font-style:italic}
+.table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:6px}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th,td{padding:8px 12px;text-align:left;vertical-align:top;border-bottom:1px solid var(--border)}
+th{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.06em;color:var(--text2);background:var(--panel);text-transform:uppercase}
+tr:last-child td{border-bottom:0}
+details.deep{border:1px solid var(--border);border-radius:6px;margin:6px 0 12px;background:var(--panel)}
+details.deep summary{cursor:pointer;padding:10px 14px;font-family:var(--mono);font-size:12.5px;color:var(--text2);list-style:none}
+details.deep summary::-webkit-details-marker{display:none}
+details.deep summary::before{content:'▸ ';color:var(--accent)}details.deep[open] summary::before{content:'▾ '}
+details.deep summary:hover{color:var(--text)}
+.deep-body{padding:0 14px 4px}
+.quickref{border:1px solid var(--accent-line);border-radius:8px;padding:18px 20px;margin-top:24px;background:var(--panel)}
+.quickref h2{color:var(--accent);font-size:14px;letter-spacing:.08em;text-transform:uppercase}
+.check{display:flex;gap:8px;align-items:flex-start;cursor:pointer}.check input{margin-top:5px;accent-color:var(--accent)}
+.checkitem{list-style:none;margin-left:-20px}
+.xref{text-decoration:none;border-bottom:1px dotted var(--accent-line)}
+.xp-card{position:absolute;z-index:60;width:min(340px,calc(100vw - 16px));background:var(--tip);border:1px solid var(--accent-line);border-radius:8px;padding:12px 14px;box-shadow:0 8px 24px rgba(0,0,0,.35);font-size:13px;line-height:1.5}
+.xp-card b{display:block;font-family:var(--mono);font-size:12.5px;font-weight:600;color:var(--accent);margin-bottom:6px}
+.xp-card p{color:var(--text);margin:0 0 10px}
+.xp-go{display:inline-block;font-family:var(--mono);font-size:12px;text-decoration:none;color:var(--accent);border:1px solid var(--accent-line);border-radius:6px;padding:4px 10px}
+.xp-go:hover{background:var(--accent-dim)}
+.back-pill{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:55;max-width:calc(100vw - 32px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:var(--mono);font-size:12px;color:var(--accent);background:var(--panel);border:1px solid var(--accent-line);border-radius:999px;padding:9px 18px;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,.35)}
+.back-pill:hover{background:var(--accent-dim)}
+@media print{.xp-card,.back-pill{display:none!important}}
+.btn{display:inline-block;font-family:var(--mono);font-size:12px;color:var(--text2);background:transparent;border:1px solid var(--border);padding:7px 14px;border-radius:6px;text-decoration:none;cursor:pointer}
+.btn:hover{color:var(--text);border-color:var(--text2)}
+.btn-accent{color:var(--accent);border-color:var(--accent-line)}.btn-accent:hover{color:var(--bg);background:var(--accent);border-color:var(--accent)}
+.mark-btn{align-self:flex-start}.mark-btn.is-read{color:var(--accent);border-color:var(--accent-line)}
+.print-btn{margin-top:10px}
+.mod-foot{padding-top:24px;display:flex;flex-direction:column;gap:16px}
+.pager{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+#foot{text-align:center;padding:28px 16px;font-family:var(--mono);font-size:10.5px;color:var(--muted);letter-spacing:.06em;border-top:1px solid var(--border)}
+.dgm{width:100%;height:auto;display:block;max-width:760px;margin:8px 0 16px;font-family:var(--sans)}
+.dgm .d-panel{fill:var(--panel);stroke:var(--border);stroke-width:1}
+.dgm .d-panel-a{stroke:var(--accent-line);stroke-width:1.5}
+.dgm .d-cross{stroke:var(--border);stroke-width:2}
+.dgm .d-axis{stroke:var(--muted);stroke-width:1.5}
+.dgm .d-axis-fill{fill:var(--muted)}
+.dgm .d-axis-label{fill:var(--muted);font-family:var(--mono);font-size:11px;letter-spacing:.2em}
+.dgm .d-num{fill:var(--accent);font-family:var(--mono);font-size:15px;font-weight:700}
+.dgm .d-title{fill:var(--text);font-family:var(--mono);font-size:13.5px;font-weight:600}
+.dgm .d-sub{fill:var(--text2);font-size:11.5px}
+.dgm .d-note{fill:var(--muted);font-size:11px;font-style:italic}
+.dgm .d-pill-a{fill:var(--accent-dim);stroke:var(--accent-line)}
+.dgm .d-pill-a-text{fill:var(--accent);font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.12em}
+.dgm .d-price{fill:none;stroke:var(--text2);stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round}
+.dgm .d-sup{fill:rgba(239,68,68,.18);stroke:rgba(239,68,68,.65);stroke-width:1}
+.dgm .d-dem{fill:rgba(34,197,94,.18);stroke:rgba(34,197,94,.65);stroke-width:1}
+.dgm .d-sell{fill:#ef4444}
+.dgm .d-buy{fill:#22c55e}
+.dgm .d-exit-sell{fill:none;stroke:#ef4444;stroke-width:1.8}
+.dgm .d-exit-buy{fill:none;stroke:#22c55e;stroke-width:1.8}
+.dgm .d-sell-rev{fill:rgba(239,68,68,.22);stroke:#ef4444;stroke-width:1.6;stroke-dasharray:3 2}
+.dgm .d-buy-rev{fill:rgba(34,197,94,.22);stroke:#22c55e;stroke-width:1.6;stroke-dasharray:3 2}
+.dgm .d-note-rev{fill:var(--text2);font-size:11px;font-style:italic}
+.dgm .d-mark-sell{fill:#ef4444;font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.12em}
+.dgm .d-mark-buy{fill:#22c55e;font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.12em}
+.dgm .d-legend text{fill:var(--text2);font-size:11.5px}
+.dgm .d-up{fill:#22c55e}.dgm .d-up-wick{stroke:#22c55e;stroke-width:1.4}
+.dgm .d-dn{fill:#ef4444}.dgm .d-dn-wick{stroke:#ef4444;stroke-width:1.4}
+.dgm .d-ghost{fill:none;stroke:var(--muted);stroke-width:1.2;stroke-dasharray:3 2}.dgm .d-ghost-wick{stroke:var(--muted);stroke-width:1.2;stroke-dasharray:3 2}
+.dgm .d-gapbar{fill:none;stroke:var(--text);stroke-width:1.4}.dgm .d-gapbar-wick{stroke:var(--text);stroke-width:1.4}
+.dgm .d-cell{fill:var(--input);stroke:var(--border)}
+.dgm .d-cell-label{fill:var(--text2);font-size:11px}
+.dgm .d-cell-note{fill:var(--text);font-family:var(--mono);font-size:11px}
+.dgm .d-bracket{fill:none;stroke:var(--muted);stroke-width:1.2}
+.dgm .d-anno{fill:var(--text2);font-size:12px}
+.dgm .d-anno-a{fill:var(--accent);font-family:var(--mono);font-size:11.5px;font-weight:600}
+.dgm .d-anno-warn{fill:#f59e0b;font-family:var(--mono);font-size:11.5px;font-weight:600}
+.dgm .d-price-strong{fill:none;stroke:var(--text);stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.dgm .d-level{stroke:var(--muted);stroke-width:1;stroke-dasharray:4 4;opacity:.7}
+.dgm .d-lvl-label{fill:var(--text2);font-family:var(--mono);font-size:11px}
+.dgm .d-break{fill:var(--accent)}
+.dgm .d-seg{fill:var(--panel);stroke:var(--accent-line);stroke-width:1.4}
+.dgm .d-seg-num{fill:var(--accent);font-family:var(--mono);font-size:11px;font-weight:700}
+.dgm .d-cp{fill:var(--accent);stroke:var(--panel);stroke-width:2}
+.dgm .d-cp-line{stroke:var(--accent);stroke-width:1.4;stroke-dasharray:6 4}
+.dgm .d-flag{fill:none;stroke:#f59e0b;stroke-width:1.4;stroke-dasharray:3 2}
+.dgm .d-near{stroke:var(--accent);stroke-width:1.6;stroke-dasharray:6 4}
+.dgm .d-far{stroke:#f59e0b;stroke-width:1.6;stroke-dasharray:6 4}
+.dgm .d-lvl-d{stroke:#38bdf8;stroke-width:1.6}.dgm .d-lvl-d-t{fill:#38bdf8;font-family:var(--mono);font-size:11px}
+.dgm .d-lvl-w{stroke:#f59e0b;stroke-width:1.6}.dgm .d-lvl-w-t{fill:#f59e0b;font-family:var(--mono);font-size:11px}
+.dgm .d-lvl-m{stroke:#fb7185;stroke-width:1.6}.dgm .d-lvl-m-t{fill:#fb7185;font-family:var(--mono);font-size:11px}
+.dgm .d-gapline{stroke:var(--text);stroke-width:1.4;stroke-dasharray:3 2}
+.dgm .d-arrow-up{fill:#22c55e;font-size:15px;font-weight:700}
+.dgm .d-arrow-dn{fill:#ef4444;font-size:15px;font-weight:700}
+.dgm .d-stair{fill:none;stroke:#ef4444;stroke-width:1.8;stroke-dasharray:6 4}
+.dgm-wrap{margin:8px 0 16px;overflow-x:auto}
+.dgm-wrap .dgm{min-width:600px;margin:0}
+.term{border-bottom:1px dotted var(--text2);cursor:help;position:relative;outline:none}
+.term:hover,.term:focus{color:var(--accent);border-bottom-color:var(--accent)}
+.term:hover::after,.term:focus::after{content:attr(data-def);position:absolute;left:0;top:calc(100% + 6px);z-index:40;width:max-content;max-width:min(300px,78vw);background:var(--tip,#151827);border:1px solid var(--accent-line);color:var(--text);font-family:var(--sans);font-size:13px;font-weight:400;font-style:normal;line-height:1.45;padding:8px 10px;border-radius:6px;white-space:normal;text-transform:none;letter-spacing:0;box-shadow:0 6px 20px rgba(0,0,0,.45)}
+@media print{.term{border-bottom:none}.term::after{display:none!important}}
+.dgm .d-flow{stroke:var(--muted);stroke-width:1.6}
+.dgm .d-flow-path{fill:none;stroke:var(--muted);stroke-width:1.6}
+.dgm .d-flow-box{fill:var(--panel);stroke:var(--accent-line);stroke-width:1.2}
+.dgm .d-flow-link:hover .d-flow-box,.dgm .d-flow-link:focus .d-flow-box{fill:var(--accent-dim);stroke:var(--accent)}
+.dgm .d-note-plain{fill:var(--text2);font-size:11.5px}
+.doit{border:1px dashed var(--accent-line);border-radius:8px;padding:10px 14px;margin:14px 0}
+.doit p{margin:0}
+.tag-doit{background:var(--accent);color:var(--bg)}
+.dgm .d-zh{fill:rgba(245,158,11,.07);stroke:rgba(245,158,11,.6);stroke-width:1.2;stroke-dasharray:6 4}.dgm .d-zh-t{fill:#f59e0b;font-family:var(--mono);font-size:11px;font-weight:600}
+.dgm .d-zi{fill:rgba(56,189,248,.10);stroke:rgba(56,189,248,.7);stroke-width:1.2}.dgm .d-zi-t{fill:#38bdf8;font-family:var(--mono);font-size:11px;font-weight:600}
+.dgm .d-proj{fill:none;stroke:var(--text2);stroke-width:1.2;stroke-dasharray:3 2}.dgm .d-proj-wick{stroke:var(--text2);stroke-width:1.2;stroke-dasharray:3 2}
+
+@media (max-width:860px){
+  .mod-grid{grid-template-columns:minmax(0,1fr);gap:0}
+  .toc{position:static;flex-direction:row;overflow-x:auto;gap:6px;max-height:none;padding-bottom:10px;border-bottom:1px solid var(--border);scrollbar-width:none}
+  .toc-link{flex:none;border:1px solid var(--border);border-radius:14px;padding:4px 10px;white-space:nowrap;font-size:12px}
+  .toc-quick{margin-top:0}
+  body{font-size:15px}
+}
+@media print{
+  :root{--bg:#fff;--panel:#fff;--input:#f3f4f6;--border:#d1d5db;--text:#111;--text2:#374151;--muted:#6b7280;--accent:#0f766e;--accent-dim:#f0fdfa;--accent-line:#99f6e4}
+  #top,.toc,.mod-foot,.print-btn,#foot{display:none!important}
+  strong{color:#000}.mod-grid{display:block}main{padding:0}
+  .sec{break-inside:avoid;padding:10px 0}
+}
+</style>
+<style>
+:root{--accent:#f5b942;--accent-dim:rgba(245,185,66,.10);--accent-line:rgba(245,185,66,.40)}
+:root[data-theme="light"]{--accent:#b7791f;--accent-dim:rgba(183,121,31,.08);--accent-line:rgba(183,121,31,.35)}
+.cl{max-width:760px;margin:0 auto;padding:24px 16px 64px}
+.cl h1{font-family:var(--mono);font-size:22px;margin-bottom:6px}
+.cl-intro{color:var(--text2);margin-bottom:16px}
+.cl-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.cl-chip{font-family:var(--mono);font-size:11.5px;color:var(--text2);background:transparent;border:1px solid var(--border);border-radius:999px;padding:4px 12px;cursor:pointer}
+.cl-chip:hover{color:var(--text)}.cl-chip.on{color:var(--accent);border-color:var(--accent-line);background:var(--accent-dim)}
+.cl-day{border-bottom:1px solid var(--border);padding:18px 0 12px}
+.cl-day h2{font-family:var(--mono);font-size:14px;font-weight:600;color:var(--text);margin-bottom:10px}
+.cl-new{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#1a1300;background:#f5b942;border-radius:999px;padding:1px 8px;margin-left:6px;vertical-align:1px}
+.cl-day ul{list-style:none;padding:0}
+.cl-day li{display:flex;gap:10px;align-items:baseline;margin:7px 0;line-height:1.5}
+.cl-day[hidden],.cl-day li[hidden]{display:none}
+.cl-tag{flex:none;width:84px;font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;text-align:center;border-radius:4px;padding:2px 0;border:1px solid}
+.cl-rule{color:#f87171;border-color:rgba(248,113,113,.45);background:rgba(248,113,113,.08)}
+.cl-learn{color:#2dd4bf;border-color:rgba(45,212,191,.4)}
+.cl-strategies{color:#60a5fa;border-color:rgba(96,165,250,.4)}
+.cl-checklist{color:#f59e0b;border-color:rgba(245,158,11,.4)}
+.cl-journal{color:#e879f9;border-color:rgba(232,121,249,.4)}
+.cl-hive{color:#f5b942;border-color:rgba(245,185,66,.4)}
+:root[data-theme="light"] .cl-rule{color:#b91c1c}:root[data-theme="light"] .cl-learn{color:#0f766e}
+:root[data-theme="light"] .cl-strategies{color:#2563eb}:root[data-theme="light"] .cl-checklist{color:#b45309}
+:root[data-theme="light"] .cl-journal{color:#a21caf}:root[data-theme="light"] .cl-hive{color:#b7791f}
+@media (max-width:520px){.cl-tag{width:72px}}
+</style>
+</head>
+<body>
+<header class="ck-top" id="top">
+  <div class="bar"><div class="logo">THE<em>/</em>HIVE <b>WHAT'S NEW</b></div>
+  <div style="display:flex;gap:8px"><a class="hub-link" href="index.html">Learn</a><a class="hub-link" href="https://cbell0920.github.io/tptraders-hub">← Hive</a><div id="hive-menu"></div></div></div>
+</header>
+<main class="cl">
+<h1>What's new</h1>
+<p class="cl-intro">Every change to The Hive, newest first.</p>
+<div class="cl-chips" role="group" aria-label="Filter"><button type="button" class="cl-chip on" data-tag="All">All</button><button type="button" class="cl-chip" data-tag="Rule">Rule</button><button type="button" class="cl-chip" data-tag="Learn">Learn</button><button type="button" class="cl-chip" data-tag="Strategies">Strategies</button><button type="button" class="cl-chip" data-tag="Checklist">Checklist</button><button type="button" class="cl-chip" data-tag="Journal">Journal</button><button type="button" class="cl-chip" data-tag="Hive">Hive</button></div>
+<section class="cl-day" data-date="2026-10-24"><h2>Oct 24, 2026 <span class="cl-new" hidden>new</span></h2><ul><li data-tag="Rule"><span class="cl-tag cl-rule">Rule</span><span>New unlock path for overnight trading, scalping, pyramiding and more than 2 contracts: written rules first, then 20 paper trades of that type, then live at minimum size.</span></li><li data-tag="Rule"><span class="cl-tag cl-rule">Rule</span><span>No drawdown step-down rule. Watch the journal's drawdown warning on prop accounts instead.</span></li><li data-tag="Journal"><span class="cl-tag cl-journal">Journal</span><span>Scenario map fields on planned trades, and a "No map" tag when one is missing.</span></li><li data-tag="Journal"><span class="cl-tag cl-journal">Journal</span><span>Renamed The Hive Journal, with the honeycomb icon.</span></li><li data-tag="Learn"><span class="cl-tag cl-learn">Learn</span><span>Hover a module link (or tap it once on a phone) to preview it, and a back button takes you to where you were after a jump.</span></li><li data-tag="Learn"><span class="cl-tag cl-learn">Learn</span><span>New 8.8 Reopen spreads: how to measure your broker's forex spreads after the 5 pm reopen.</span></li><li data-tag="Learn"><span class="cl-tag cl-learn">Learn</span><span>The Start page now points to Paper Trading and Strategies.</span></li><li data-tag="Checklist"><span class="cl-tag cl-checklist">Checklist</span><span>Reminder to log forex reopen spreads during your first two weeks.</span></li><li data-tag="Hive"><span class="cl-tag cl-hive">Hive</span><span>New menu (☰) on every page: What's new, the dark mode switch, and links to every tool.</span></li><li data-tag="Hive"><span class="cl-tag cl-hive">Hive</span><span>This What's new page.</span></li><li data-tag="Hive"><span class="cl-tag cl-hive">Hive</span><span>The hub clock shows which market session is open, and a sessions timeline sits under the tiles.</span></li></ul></section><section class="cl-day" data-date="2026-10-23"><h2>Oct 23, 2026 <span class="cl-new" hidden>new</span></h2><ul><li data-tag="Rule"><span class="cl-tag cl-rule">Rule</span><span>A scenario map is required before any order: where price should go, what happens if it goes the other way first, and the price that kills the idea.</span></li><li data-tag="Learn"><span class="cl-tag cl-learn">Learn</span><span>New 4.12 The scenario map, and 4.13 Wyckoff and IOF.</span></li><li data-tag="Strategies"><span class="cl-tag cl-strategies">Strategies</span><span>Wyckoff names added to four strategy cards.</span></li><li data-tag="Hive"><span class="cl-tag cl-hive">Hive</span><span>New Paper Trading page and tile.</span></li><li data-tag="Hive"><span class="cl-tag cl-hive">Hive</span><span>Light mode on every page.</span></li><li data-tag="Hive"><span class="cl-tag cl-hive">Hive</span><span>Honeycomb icon in the browser tab.</span></li></ul></section><section class="cl-day" data-date="2026-10-22"><h2>Oct 22, 2026 <span class="cl-new" hidden>new</span></h2><ul><li data-tag="Rule"><span class="cl-tag cl-rule">Rule</span><span>Counter-trend and sideways trades use a 1:1 target: half off at 1:1, stop to entry, and the other half (the dream team) rides to the opposing zone.</span></li><li data-tag="Strategies"><span class="cl-tag cl-strategies">Strategies</span><span>New Strategies page with seven cards, still under review: which side to trade, supply and demand, top-down, trend pullback, breakout retest, range edges and double bottom.</span></li><li data-tag="Hive"><span class="cl-tag cl-hive">Hive</span><span>Renamed from TPTraders to The Hive.</span></li></ul></section><section class="cl-day" data-date="2026-10-21"><h2>Oct 21, 2026 <span class="cl-new" hidden>new</span></h2><ul><li data-tag="Rule"><span class="cl-tag cl-rule">Rule</span><span>Gate 0 added: 20 paper A trades with the plan followed before going live.</span></li><li data-tag="Rule"><span class="cl-tag cl-rule">Rule</span><span>Counter-trend trades unlock with B zones at Gate 1, at half risk.</span></li><li data-tag="Rule"><span class="cl-tag cl-rule">Rule</span><span>The confluence bonus (formerly "Juice") counts only multi-timeframe confluence or a confirming candle at the zone.</span></li><li data-tag="Journal"><span class="cl-tag cl-journal">Journal</span><span>Emotion tag, two SCRAM exit reasons, and gate counters on the Review page.</span></li><li data-tag="Learn"><span class="cl-tag cl-learn">Learn</span><span>Diagrams added, and a Forex module.</span></li><li data-tag="Hive"><span class="cl-tag cl-hive">Hive</span><span>New hub with the honeycomb tiles, and the printable Daily Checklist.</span></li></ul></section><section class="cl-day" data-date="2026-10-20"><h2>Oct 20, 2026 <span class="cl-new" hidden>new</span></h2><ul><li data-tag="Learn"><span class="cl-tag cl-learn">Learn</span><span>Learn launched: the method in eight modules, a cheat sheet and key terms.</span></li></ul></section>
+</main>
+<div id="foot">THE HIVE · Educational content only · Not financial advice</div>
+<script>
+(function(){
+  var KEY='hive-seen',seen=null,days=[].slice.call(document.querySelectorAll('.cl-day'));
+  try{seen=localStorage.getItem(KEY)}catch(e){}
+  if(seen)days.forEach(function(d){if(d.dataset.date>seen)d.querySelector('.cl-new').hidden=false});
+  if(days.length){try{localStorage.setItem(KEY,days[0].dataset.date)}catch(e){}}
+  document.querySelector('.cl-chips').addEventListener('click',function(e){
+    var b=e.target.closest('.cl-chip');if(!b)return;
+    document.querySelectorAll('.cl-chip').forEach(function(c){c.classList.toggle('on',c===b)});
+    var t=b.dataset.tag;
+    days.forEach(function(d){
+      var any=false;
+      d.querySelectorAll('li').forEach(function(li){var on=t==='All'||li.dataset.tag===t;li.hidden=!on;if(on)any=true});
+      d.hidden=!any;
+    });
+  });
+})();
+</script>
+</body>
+</html>
